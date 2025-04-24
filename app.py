@@ -5,9 +5,9 @@ from googletrans import Translator, LANGUAGES # Google Translate
 import io # To handle audio bytes in memory
 
 # --- Configuration ---
-API_URL = "http://17.26.71.21:123/v1/completions" # Replace to your own API or load using HF like previous version
+API_URL = "http://107.206.71.138:40200/v1/completions" # Replace
 MODEL_NAME = "shikhac30/mistral_nemo_12b_medical_model"
-DEFAULT_LANGUAGES = {"en": "english", "es": "spanish", "fr": "french", "de": "german", "hi": "hindi", "ar": "arabic", "pt": "portuguese", "zh-cn": "chinese (simplified)"}
+DEFAULT_LANGUAGES = {"en": "english", "fr": "french", "de": "german", "hi": "hindi", "ar": "arabic", "pt": "portuguese", "zh-cn": "chinese (simplified)"}
 
 # --- Helper Functions (No changes needed from previous version) ---
 def simplify_text_api(prompt_text: str) -> str | None:
@@ -74,7 +74,7 @@ if 'autoplay_tts' not in st.session_state:
 if 'default_translate' not in st.session_state:
     st.session_state.default_translate = False
 if 'default_translate_lang' not in st.session_state:
-    st.session_state.default_translate_lang = 'es'
+    st.session_state.default_translate_lang = 'hi'
 # Chat and Last State
 if "messages" not in st.session_state:
     # Message structure: {'role': str, 'content': str, 'audio_en': BytesIO|None, 'audio_tr': BytesIO|None, 'lang_tr': str|None}

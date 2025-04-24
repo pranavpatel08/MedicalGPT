@@ -10,6 +10,9 @@ MedicalGPT converts complex medical terminology into plain language, making heal
 - **User-friendly Interface**: Clean, intuitive design for healthcare settings
 - **Customizable Settings**: Configure default language and text-to-speech preferences
 
+![Screenprint](SS.png)
+
+
 ## Local Installation and Deployment
 
 ### Prerequisites
