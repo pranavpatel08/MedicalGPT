@@ -1,112 +1,108 @@
-# MedicalGPT: Medical Text Simplification App
+# MedicalGPT: Medical Text Simplifier 🩺
 
-MedicalGPT converts complex medical terminology into plain language, making healthcare information more accessible to patients. This application utilizes a fine-tuned Mistral-NeMo 12B model with LoRA adaptation to simplify medical texts, translate content into multiple languages, and provide text-to-speech capabilities.
+This project provides a user-friendly interface (built with Streamlit) to interact with a fine-tuned Mistral-Nemo 12B language model specialized in simplifying complex medical text. The goal is to make medical terminology more accessible to patients and non-specialists, complemented by translation and text-to-speech features.
 
-## Features
+**Core Functionality:** Converts complex medical notes, reports, or instructions into plain, easy-to-understand language.
 
-- **Medical Text Simplification**: Transforms complex medical jargon into easy-to-understand language
-- **Multi-language Support**: Translates simplified text into 12 languages
-- **Text-to-Speech**: Converts simplified text into spoken audio
-- **User-friendly Interface**: Clean, intuitive design for healthcare settings
-- **Customizable Settings**: Configure default language and text-to-speech preferences
+## ✨ Features
+
+* **📝 Text Simplification:** Leverages a fine-tuned LLM to simplify input medical text.
+* **🌐 Translation:**
+    * Translate simplified text into multiple languages (e.g., Spanish, French, German, Hindi, etc.).
+    * Option to enable translation by default upon simplification.
+    * Manually translate the last simplified message via the sidebar.
+* **🔊 Text-to-Speech (TTS):**
+    * Listen to the simplified English text.
+    * Listen to the translated text (if translation is performed).
+    * Option to attempt *autoplay* of audio when generated (browser-dependent).
+* **⚙️ Settings:** Configure default behavior for translation and audio autoplay via the sidebar.
 
 ![Screenprint](SS.png)
 
+## 🚀 Technology Stack
 
-## Local Installation and Deployment
+* **Frontend:** Streamlit
+* **Backend LLM API:** Fine-tuned Mistral-Nemo 12B model (served via HTTP endpoint)
+* **Core Python Libraries:** `requests`, `gTTS`, `googletrans`
+* **Model Fine-Tuning (See Training Details):** Hugging Face `transformers`, `peft` (LoRA), `datasets`, `bitsandbytes`
 
-### Prerequisites
+## 🧠 Model Details
 
-- Python 3.8 or higher
-- GPU with at least 16GB VRAM (recommended for optimal performance)
-- At least 30GB of free disk space
-- Internet connection
+The simplification capability relies on a `Mistral-Nemo-Instruct-2407` (12B parameter) model fine-tuned specifically for this task using Low-Rank Adaptation (LoRA). The fine-tuning process utilized a dataset of medical text pairs (original and simplified) and targeted specific model layers for efficient adaptation.
 
-### Setup and Run Locally
+For comprehensive details on the dataset, fine-tuning process (LoRA configuration, hyperparameters), adapter merging, interactive testing, and evaluation results (including methodology and scores), please refer to the dedicated README within the training notebooks folder:
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/medicalgpt-app.git
-   cd medicalgpt-app
-   ```
+➡️ **[Training & Deployment Notebooks Details](./training-deploying_notebooks/README.md)**
 
-2. Create a virtual environment (recommended):
-   ```bash
-   python -m venv venv
-   
-   # On Windows
-   venv\Scripts\activate
-   
-   # On macOS/Linux
-   source venv/bin/activate
-   ```
+## 📁 Repository Structure
 
-3. Install the required dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+```
+├── training-deploying_notebooks/ # Contains notebooks for fine-tuning, merging, testing, evaluation
+│   ├── stage1_finetuning_mistral-12b.ipynb
+│   ├── stage2_merge_model.ipynb
+│   ├── stage3_live_chat.ipynb
+│   ├── stage4_evaluation.ipynb
+│   └── README.md                 # Detailed explanation of the notebooks
+├── app.py                        # The Streamlit frontend application code
+├── requirements.txt              # Python dependencies for the Streamlit app
+└── README.md                     # This main README file
 
-4. Run the application:
-   ```bash
-   streamlit run app.py
-   ```
+```
 
-5. Open your web browser and navigate to:
-   ```
-   http://localhost:8501
-   ```
+## 🛠️ Getting Started
 
-### Usage Instructions
+To run the Streamlit frontend application locally, follow these steps:
 
-1. **Loading the Model**:
-   - When you first start the application, click the "Load Model" button in the sidebar
-   - This will download and initialize the Mistral-NeMo 12B model (may take a few minutes)
+1.  **Clone the Repository:**
+    ```bash
+    git clone <your-repo-url>
+    cd <your-repo-name>
+    ```
 
-2. **Simplifying Medical Text**:
-   - Enter complex medical text in the input box
-   - Click "Simplify Text" to process the input
-   - The simplified output will appear below
+2.  **Create and Activate a Virtual Environment:**
+    ```bash
+    # For Linux/macOS
+    python3 -m venv venv
+    source venv/bin/activate
 
-3. **Translating Text**:
-   - Set a default translation language in the sidebar (optional)
-   - Use the language selector and "Translate" button under the output
-   - Toggle "Translate output by default" to automatically translate results
+    # For Windows
+    python -m venv venv
+    .\venv\Scripts\activate
+    ```
 
-4. **Text-to-Speech**:
-   - Click the "Listen" button to hear the simplified or translated text
-   - Toggle "Enable text-to-speech by default" to automatically play audio
+3.  **Install Dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ```
+    *Note: Ensure you have upgraded Streamlit if you encountered issues with `autoplay` or `key` arguments previously: `pip install --upgrade streamlit`*
 
-5. **Saving Results**:
-   - Use the "Download as Text" button to save the results to a file
+4.  **❗️ IMPORTANT: Ensure Backend API is Running:**
+    This Streamlit application (`app.py`) is only the **frontend**. It requires the fine-tuned Mistral-Nemo model to be deployed and running as an API service that it can send requests to.
+    * Make sure your LLM API endpoint (like the one referenced by `API_URL = "http://17.26.71.138:40/v1/completions"` in the code) is active and accessible from where you are running the Streamlit app.
+    * If your API endpoint URL is different, update the `API_URL` constant near the top of `app.py`.
 
-## Troubleshooting
+    **📌 Architecture Note:** The Streamlit application (`app.py`) acts purely as a frontend. It **does not load the large language model locally**. Instead, it communicates with a separate backend API service where the fine-tuned model is hosted and run (potentially optimized with inference servers like **vLLM**). This differs from methods like using `transformers.pipeline` directly within the application script (as shown in your example snippet or potentially demonstrated in earlier development/testing notebooks like `stage3_live_chat.ipynb`). For this app to function, the API backend *must* be operational.
 
-- **Out of Memory Errors**: If you encounter memory issues, try:
-  - Reducing the length of input text
-  - Using a machine with more GPU memory
-  - Setting `device_map="cpu"` in the code (will be slower but use less VRAM)
+5.  **Run the Streamlit App:**
+    ```bash
+    streamlit run app.py
+    ```
 
-- **Model Loading Issues**:
-  - Ensure you have a stable internet connection for the initial model download
-  - Check that you have sufficient disk space (model requires ~23GB)
+6.  Open your web browser and navigate to the local URL provided by Streamlit (usually `http://localhost:8501`).
 
-- **Translation or TTS Problems**:
-  - Both features require an internet connection
-  - Some language combinations may have reduced quality
+## Usage
 
-## System Requirements
+1.  Enter or paste the complex medical text into the chat input box at the bottom.
+2.  Press Enter or click the send button.
+3.  The simplified text (and translation, if enabled by default) will appear in the chat window.
+4.  Use the sidebar (⚙️ Settings & Actions) to:
+    * Toggle default translation and select the language.
+    * Toggle audio autoplay (browser permitting).
+    * Manually trigger a translation of the *last* simplified message using the selected language.
+5.  Click the speaker icons (🔊 Listen...) within the chat messages to play the corresponding audio.
 
-- **Minimum**: 16GB RAM, CPU only (very slow inference)
-- **Recommended**: 32GB RAM, GPU with 16GB+ VRAM
-- **Storage**: At least 30GB free disk space
+## 🏋️‍♀️ Training & Evaluation Details
 
-## Model Information
+As mentioned earlier, the process of fine-tuning the model, merging the adapter, performing initial tests, and evaluating the simplification quality is documented in separate Jupyter notebooks. Please see the detailed README in the `training-deploying_notebooks/` directory for instructions and explanations:
 
-- Base Model: Mistral-NeMo 12B
-- Fine-tuning: Low-Rank Adaptation (LoRA) on 800 pairs of medical notes
-- Performance: 92% SARI score on test data
-- Inference: Runs on CPU or GPU with reduced precision (bfloat16)
-
-## Credits
-
-This application was developed as part of the Medical Text Simplification Project, aiming to improve healthcare communication accessibility. The model was fine-tuned on a dataset of medical notes from five clinical domains: Gastroenterology, Neurology, Orthopedics, Radiology, and Urology.
+➡️ **[Training & Deployment Notebooks Details](./training-deploying_notebooks/README.md)**
