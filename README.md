@@ -32,7 +32,7 @@ The simplification capability relies on a `Mistral-Nemo-Instruct-2407` (12B para
 
 For comprehensive details on the dataset, fine-tuning process (LoRA configuration, hyperparameters), adapter merging, interactive testing, and evaluation results (including methodology and scores), please refer to the dedicated README within the training notebooks folder:
 
-➡️ **[Training & Deployment Notebooks Details](./training-deploying_notebooks/README.md)**
+➡️ **[Training & Deployment Notebooks Details](./training-deploying_notebooks/readme.md)**
 
 ## 📁 Repository Structure
 
@@ -105,4 +105,4 @@ To run the Streamlit frontend application locally, follow these steps:
 
 As mentioned earlier, the process of fine-tuning the model, merging the adapter, performing initial tests, and evaluating the simplification quality is documented in separate Jupyter notebooks. Please see the detailed README in the `training-deploying_notebooks/` directory for instructions and explanations:
 
-➡️ **[Training & Deployment Notebooks Details](./training-deploying_notebooks/README.md)**
+➡️ **[Training & Deployment Notebooks Details](./training-deploying_notebooks/readme.md)**
