@@ -109,7 +109,7 @@ To run the Streamlit frontend application locally, follow these steps:
 
 As mentioned earlier, the process of fine-tuning the model, merging the adapter, performing initial tests, and evaluating the simplification quality is documented in separate Jupyter notebooks. Please see the detailed README in the `training-deploying_notebooks/` directory for instructions and explanations:
 
-➡️ **[Training & Deployment Notebooks Details](./training-deploying_notebooks/README.md)**
+➡️ **[Training & Deployment Notebooks Details](./training-deploying_notebooks/readme.md)**
 
 ## 📬 Contact
 
