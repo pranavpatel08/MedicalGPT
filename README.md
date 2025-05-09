@@ -17,7 +17,7 @@ This project provides a user-friendly interface (built with Streamlit) to intera
     * Option to attempt *autoplay* of audio when generated (browser-dependent).
 * **⚙️ Settings:** Configure default behavior for translation and audio autoplay via the sidebar.
 
-![Screenprint](SS.png)
+![Screenprint](./images/AppDemo.png)
 
 ## 🚀 Technology Stack
 
@@ -25,6 +25,10 @@ This project provides a user-friendly interface (built with Streamlit) to intera
 * **Backend LLM API:** Fine-tuned Mistral-Nemo 12B model (served via HTTP endpoint)
 * **Core Python Libraries:** `requests`, `gTTS`, `googletrans`
 * **Model Fine-Tuning (See Training Details):** Hugging Face `transformers`, `peft` (LoRA), `datasets`, `bitsandbytes`
+
+### Application Architecture
+![Application Architecture](./images/app_architecture.png)
+
 
 ## 🧠 Model Details
 
@@ -37,15 +41,15 @@ For comprehensive details on the dataset, fine-tuning process (LoRA configuratio
 ## 📁 Repository Structure
 
 ```
-├── training-deploying_notebooks/ # Contains notebooks for fine-tuning, merging, testing, evaluation
-│   ├── stage1_finetuning_mistral-12b.ipynb
-│   ├── stage2_merge_model.ipynb
-│   ├── stage3_live_chat.ipynb
-│   ├── stage4_evaluation.ipynb
-│   └── README.md                 # Detailed explanation of the notebooks
-├── app.py                        # The Streamlit frontend application code
-├── requirements.txt              # Python dependencies for the Streamlit app
-└── README.md                     # This main README file
+├── training-deploying_notebooks/           # Contains notebooks for: 
+│   ├── stage1_finetuning_mistral-12b.ipynb   # fine-tuning, 
+│   ├── stage2_merge_model.ipynb              # merging,
+│   ├── stage3_live_chat.ipynb                # testing,
+│   ├── stage4_evaluation.ipynb               # evaluation.
+│   └── README.md                           # Detailed explanation of the notebooks
+├── app.py                                  # The Streamlit frontend application code
+├── requirements.txt                        # Python dependencies for the Streamlit app
+└── README.md                               # This main README file
 
 ```
 
@@ -105,4 +109,11 @@ To run the Streamlit frontend application locally, follow these steps:
 
 As mentioned earlier, the process of fine-tuning the model, merging the adapter, performing initial tests, and evaluating the simplification quality is documented in separate Jupyter notebooks. Please see the detailed README in the `training-deploying_notebooks/` directory for instructions and explanations:
 
-➡️ **[Training & Deployment Notebooks Details](./training-deploying_notebooks/readme.md)**
+➡️ **[Training & Deployment Notebooks Details](./training-deploying_notebooks/README.md)**
+
+## 📬 Contact
+
+For inquiries regarding this project, including aspects of LLM deployment (API endpoint integration, offline model loading), or if you have any questions or potential collaboration ideas, please feel free to reach out:
+
+* **Email:** [pranavjpatel.08@gmail.com](mailto:pranavjpatel.08@gmail.com)
+* **LinkedIn:** [Pranav Patel](https://www.linkedin.com/in/pranavpatel08/)
